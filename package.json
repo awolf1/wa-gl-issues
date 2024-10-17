@@ -93,7 +93,7 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "publish": "vsce package --out \"dist\""
+    "publish": "vsce package --out \"vsix\""
   },
   "devDependencies": {
     "@types/mocha": "^10.0.8",
