@@ -17,6 +17,13 @@ GitLab Issues Time Tracker is an extension for Visual Studio Code that allows de
 - Stop working on GitLab Issue [<WA> GitLab Issues]
 
 
+## Installation
+
+1. Clone or download this repository.
+2. Open Visual Studio Code and go to View -> Extensions.
+3. Select the option to install from .vsix file and point to the extension directory.
+4. Follow the setup instructions to enter your GitLab token.
+
 
 ## Release Notes
 
