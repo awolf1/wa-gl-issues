@@ -402,23 +402,42 @@ async function startWorkIssue() {
 
 // Função para executar o comando git e obter a URL do repositório remoto
 async function getGitRemoteUrl(): Promise<string | undefined> {
-	return new Promise((resolve, reject) => {
+	try {
 		const workspacePath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
 
 		if (!workspacePath) {
 			vscode.window.showErrorMessage('Nenhum workspace aberto.');
-			return resolve(undefined);
+			return undefined;
 		}
 
-		exec('git remote get-url origin', { cwd: workspacePath }, (err: any, stdout, stderr) => {
-			if (err || stderr) {
-				vscode.window.showErrorMessage('Erro ao obter a URL remota do repositório Git: ' + err.message);
+		// Usar await com a Promise ao invés de lidar manualmente com resolve/reject
+		const { stdout, stderr } = await execPromise('git remote get-url origin', { cwd: workspacePath });
+
+		if (stderr) {
+			vscode.window.showWarningMessage('Aviso ao obter a URL remota do repositório Git: ' + stderr);
+		}
+
+		return stdout.trim();
+	} catch (err) {
+		// Certifique-se de tratar o erro corretamente
+		const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido ao executar comando Git.';
+		vscode.window.showErrorMessage('Erro ao obter a URL remota do repositório Git: ' + errorMessage);
+		return undefined;
+	}
+}
+
+// Função utilitária para converter exec em uma Promise que pode ser usada com async/await
+function execPromise(command: string, options: { cwd: string }): Promise<{ stdout: string, stderr: string }> {
+	return new Promise((resolve, reject) => {
+		exec(command, options, (err, stdout, stderr) => {
+			if (err) {
 				return reject(err);
 			}
-			resolve(stdout.trim());
+			resolve({ stdout, stderr });
 		});
 	});
 }
+
 
 // Função para extrair a URL do servidor do projeto a partir da URL do GitLab
 function extractGitRemoteServer(gitUrl: string): string | undefined {
