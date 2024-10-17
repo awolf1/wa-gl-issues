@@ -2,7 +2,7 @@
   "name": "wa-gl-issues",
   "displayName": "<WA> GitLab Issues Time Tracker",
   "description": "",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "url": "git+https://github.com/awolf1/wa-gl-issues.git",
     "type": "git"
@@ -92,7 +92,8 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "publish": "vsce package --out \"dist\""
   },
   "devDependencies": {
     "@types/mocha": "^10.0.8",

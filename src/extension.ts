@@ -464,9 +464,6 @@ async function fetchGitLabProjectId(projectPath: string, token: string): Promise
 	try {
 		let server = await getGitLabServer(token as string);
 
-		console.log(`https://${server}/api/v4/projects/${encodeURIComponent(projectPath)}`);
-		console.log(token);
-
 		const response = await axios.get(`https://${server}/api/v4/projects/${encodeURIComponent(projectPath)}`, {
 			headers: { 'Authorization': `Bearer ${token}` }
 		});
