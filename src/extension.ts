@@ -442,9 +442,9 @@ function execPromise(command: string, options: { cwd: string }): Promise<{ stdou
 // Função para extrair a URL do servidor do projeto a partir da URL do GitLab
 function extractGitRemoteServer(gitUrl: string): string | undefined {
 	// Exemplo de URL GitLab: git@gitlab.com:user/repo.git ou https://gitlab.com/user/repo.git
-	const match = gitUrl.match(/(?:https:\/\/|git@)([^:\/]+)/);
+	let match = gitUrl.match(/(?:https:\/\/|git@|http:\/\/)([^:\/]+)/);
 	if (match) {
-		return match[1].replace("git@", "https://"); // Retorna "user/repo"
+		return match[1].replace("git@", "https://").replace("http://", "https://"); // Retorna "user/repo"
 	}
 	return undefined;
 }
@@ -463,6 +463,9 @@ function extractProjectNameFromGitUrl(gitUrl: string): string | undefined {
 async function fetchGitLabProjectId(projectPath: string, token: string): Promise<number | undefined> {
 	try {
 		let server = await getGitLabServer(token as string);
+
+		console.log(`https://${server}/api/v4/projects/${encodeURIComponent(projectPath)}`);
+		console.log(token);
 
 		const response = await axios.get(`https://${server}/api/v4/projects/${encodeURIComponent(projectPath)}`, {
 			headers: { 'Authorization': `Bearer ${token}` }
