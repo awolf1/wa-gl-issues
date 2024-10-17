@@ -1,0 +1,116 @@
+{
+  "name": "wa-gl-issues",
+  "displayName": "<WA> GitLab Issues Time Tracker",
+  "description": "",
+  "version": "0.1.0",
+  "repository": {
+    "url": "git+https://github.com/awolf1/wa-gl-issues.git",
+    "type": "git"
+  },
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gl-issues.configure",
+        "title": "Configure GitLab Credentials [<WA> GitLab Issues]"
+      },
+      {
+        "command": "gl-issues.listIssues",
+        "title": "List GitLab Issues [<WA> GitLab Issues]"
+      },
+      {
+        "command": "gl-issues.logTime",
+        "title": "Log Time on GitLab Issue [<WA> GitLab Issues]"
+      },
+      {
+        "command": "gl-issues.startIssue",
+        "title": "Start working on GitLab Issue [<WA> GitLab Issues]"
+      },
+      {
+        "command": "gl-issues.spentIssue",
+        "title": "Show spent time working on GitLab Issue [<WA> GitLab Issues]"
+      },
+      {
+        "command": "gl-issues.stopIssue",
+        "title": "Stop working on GitLab Issue [<WA> GitLab Issues]"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "<WA> GitLab Issues",
+      "properties": {
+        "gl-issues.token": {
+          "type": "string",
+          "default": "",
+          "description": "API Token"
+        },
+        "gl-issues.username": {
+          "type": "string",
+          "default": "",
+          "description": "User"
+        },
+        "gl-issues.issue.projectId": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Project id"
+        },
+        "gl-issues.issue.iid": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Issue iid"
+        },
+        "gl-issues.issue.date": {
+          "type": "number",
+          "default": "",
+          "scope": "resource",
+          "description": "last date"
+        },
+        "gl-issues.issue.time": {
+          "type": "number",
+          "default": "",
+          "scope": "resource",
+          "description": "Working time"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.8",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.94.0",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.11.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.2",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "humanize-duration": "^3.32.1",
+    "keytar": "^7.9.0"
+  }
+}
