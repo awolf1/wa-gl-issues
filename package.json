@@ -2,7 +2,7 @@
   "name": "wa-gl-issues",
   "displayName": "<WA> GitLab Issues Time Tracker",
   "description": "",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "url": "git+https://github.com/awolf1/wa-gl-issues.git",
     "type": "git"

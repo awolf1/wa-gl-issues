@@ -33,7 +33,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const logTime = vscode.commands.registerCommand('gl-issues.logTime', async () => {
 		const ret = await logTimeOnIssue();
-		vscode.window.showInformationMessage(`Tempo total na Issue: ${ret.human_total_time_spent}`);
+		if (ret.human_total_time_spent) {
+			vscode.window.showInformationMessage(`Tempo total na Issue: ${ret.human_total_time_spent}`);
+		}
 	});
 
 
@@ -452,11 +454,9 @@ function extractGitRemoteServer(gitUrl: string): string | undefined {
 // Função para extrair o nome do projeto a partir da URL do GitLab
 function extractProjectNameFromGitUrl(gitUrl: string): string | undefined {
 	// Exemplo de URL GitLab: git@gitlab.com:user/repo.git ou https://gitlab.com/user/repo.git
-	const match = gitUrl.match(/[:\/]([^\/]+\/[^\/]+)\.git$/);
-	if (match) {
-		return match[1]; // Retorna "user/repo"
-	}
-	return undefined;
+	const server = extractGitRemoteServer(gitUrl) as string;
+
+	return gitUrl.substring(gitUrl.lastIndexOf(server) + server?.length + 1).replace(".git", "");
 }
 
 // Função para obter o Project ID do GitLab a partir do nome do projeto
